@@ -11,6 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static com.example.account.type.ErrorCode.INVALID_REQUEST;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -46,5 +48,11 @@ public class Account {
         balance -= amount;
     }
 
+    public void cancelBalance(Long amount) {
+        if (amount < 0) {
+            throw new AccountException(INVALID_REQUEST);
+        }
+        balance += amount;
+    }
 
 }
